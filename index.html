@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./resources/css/output.css">
+    <link rel="stylesheet" href="./resources/css/dropdown.css">
+    <link rel="stylesheet" href="./resources/css/scrollbar.css">
+    <link rel="stylesheet" href="./resources/css/nav.css">
+    <link rel="stylesheet" href="./resources//css//second-section.css">
+    <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
+    <script src="./resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .login {
+        width: 23px;
+        height: 23px;
+        margin-right: 8px;
+    }
+</style>
+
+<body class="h-full antialiased dark">
+    <div class="dark:bg-primary w-full h-28  flex flex-col items-start z-50">
+        <img src="./resources/img/LogoKiwi02-removebg-preview.png" class="h-16 w-44 pt-3 pl-10">
+        <div class="w-full flex items-center pr-12 pl-3">
+            <nav class="text-white uppercase text-sm z-10">
+                <ul class="flex space-x-12 font-medium">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Produtos e Serviços
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            por que kiwi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            ajuda
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="dropdown text-white text-sm font-medium flex items-center ml-auto relative">
+                <button class="dropbtn flex items-center">
+                    <img src="./resources/css/login.svg" class="login">
+                    Login
+                </button>
+                <div class="dropdown-content absolute">
+                    <a href="#">Cliente</a>
+                    <a href="#">Administrador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-secondary gradient-effect w-full text-center" style="height: 768px;">
+        <div>
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>First slide label</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Second slide label</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="text-white">Nossos produtos <br>e <br>serviços</h1>
+    </div>
+    <div class="faq bg-secondary gradient-effect text-white pl-48 pr-48" style="height: 512px;">
+        <h1 class="mb-20">Dúvidas Frequentes</h1>
+
+    </div>
+    <div class="footer">
+        <div>
+
+        </div>
+    </div>
+    <script src="./resources/js/gradient.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./resources/css/output.css">
+    <link rel="stylesheet" href="./resources//css/login/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    .form-container,
+    .cadastro {
+        transition: transform 0.5s ease-in-out;
+    }
+</style>
+
+<body class="bg-primary h-full">
+    <div class="w-full flex" style="justify-content: center;">
+        <img src="LogoKiwi-removebg01 (2).png" class="h-14 w-44" style="margin-top: 23px;">
+    </div>
+    <div class="flex justify-center">
+        <div class="container gap-20">
+            <div class="login ml-20 form-container">
+                <form class="flex flex-col">
+                    <p class="text-3xl tracking-widest font-bold uppercase pb-10 text-center text-login">Login</p>
+                    <div id="novoInput" style="display: none;" class="pb-5">
+                        <label class="label text-white" name="nome">Nome</label>
+                        <input id="newInput" type="text" name="newInput" class="h-8" disabled>
+                    </div>
+                    <label class="label text-white">E-mail</label>
+                    <input type="email" name="email" class="h-8">
+                    <label class="label pt-5 text-white">Senha</label>
+                    <input type="password" name="password" class="h-8">
+                    <input type="submit" value="entrar"
+                        class="mt-9 h-8 w-56 uppercase rounded-full mx-auto tracking-wider antialiased">
+                </form>
+            </div>
+            <div class="cadastro flex flex-col items-center ml-20 mt-12">
+                <h1 class="text-3xl text-center font-bold antialiased slogan">
+                    Seja Bem-Vindo(a) de volta!!
+                </h1>
+                <h3 class="mt-10 text-center text-2xl font-bold antialiased slogan-2">
+                    Primeiro acesso?
+                </h3>
+                <h4 class="mt-7 w-64 text-center text-xl slogan-3">
+                    Clique aqui para fazer o cadastro em nossa empresa
+                </h4>
+
+                <h2 class="cadastrar mt-5 text-2xl font-bold antialiased">
+                    <a href="#" id="toggleButton">Cadastre-se</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./resources/js/login.js1"></script>
+
+</html>
