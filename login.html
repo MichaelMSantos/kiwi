@@ -7,23 +7,37 @@
     <link rel="stylesheet" href="./resources/css/output.css">
     <link rel="stylesheet" href="./resources//css/login/style.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <style>
     .form-container,
     .cadastro {
         transition: transform 0.5s ease-in-out;
     }
+
+    .svg-green {
+        filter: invert(100%);
+    }
 </style>
 
 <body class="bg-primary h-full">
-    <div class="w-full flex" style="justify-content: center;">
-        <img src="LogoKiwi-removebg01 (2).png" class="h-14 w-44" style="margin-top: 23px;">
+    <div class="w-full flex items-center">
+        <div class="flex-1">
+            <a href="index.html">
+            <img src="./resources/icons/arrow-left.svg" class="h-10 ml-10 svg-green" alt="">
+            </a>
+        </div>
+        <div class="flex-1 flex justify-center">
+            <img src="LogoKiwi-removebg01 (2).png" class="h-14 w-44" style="margin-top: 23px;">
+        </div>
+        <div class="flex-1">
+            <!-- Espaço vazio para centralização -->
+        </div>
     </div>
     <div class="flex justify-center">
         <div class="container gap-20">
             <div class="login ml-20 form-container">
-                <form class="flex flex-col">
+                <form id="loginForm" class="flex flex-col" action="logar.php">
                     <p class="text-3xl tracking-widest font-bold uppercase pb-10 text-center text-login">Login</p>
                     <div id="novoInput" style="display: none;" class="pb-5">
                         <label class="label text-white" name="nome">Nome</label>
@@ -35,6 +49,7 @@
                     <input type="password" name="password" class="h-8">
                     <input type="submit" value="entrar"
                         class="mt-9 h-8 w-56 uppercase rounded-full mx-auto tracking-wider antialiased">
+                    <a href="index.html" class="text-white uppercase text-sm text-center pt-9">voltar</a>
                 </form>
             </div>
             <div class="cadastro flex flex-col items-center ml-20 mt-12">
@@ -55,6 +70,52 @@
         </div>
     </div>
 </body>
-<script src="./resources/js/login.js1"></script>
+<script>
+    
+    const toggleButton = document.getElementById('toggleButton');
+    const login = document.querySelector('.login');
+    const cadastro = document.querySelector('.cadastro');
+    const novoInput = document.getElementById('novoInput');
+    const newInput = document.getElementById('newInput');
+    const formContainer = document.querySelector('.form-container');
+    const textlogin = document.querySelector('.text-login');
+    const slogan = document.querySelector('.slogan');
+    const slogan2 = document.querySelector('.slogan-2');
+    const slogan3 = document.querySelector('.slogan-3');
+
+    let isLoginFirst = true;
+
+    toggleButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (isLoginFirst) {
+            formContainer.style.transform = 'translateX(150%)';
+            cadastro.style.transform = 'translateX(-120%)';
+            novoInput.style.display = 'block';
+            newInput.removeAttribute('disabled');
+            toggleButton.innerText = 'Faça o login';
+            textlogin.innerText = 'Cadastro';
+            slogan.innerText = 'Faça o cadastro para aproveitar nossos produtos e serviços';
+            slogan2.style.display = 'none';
+            slogan3.innerText = 'Já possui conta?';
+            document.getElementById('loginForm').action = "../config/cadastrar.php";
+        } else {
+            formContainer.style.transform = 'translateX(0%)';
+            cadastro.style.transform = 'translateX(0%)';
+            login.style.order = '1';
+            cadastro.style.order = '2';
+            novoInput.style.display = 'none';
+            newInput.setAttribute('disabled', 'true');
+            toggleButton.innerText = 'Cadastre-se';
+            textlogin.innerText = 'Login';
+            slogan.innerText = 'Seja Bem-Vindo(a) de Volta!!';
+            slogan2.style.display = 'block';
+            slogan3.innerText = 'Clique aqui para fazer o cadastro em nossa empresa';
+            document.getElementById('loginForm').action = "logar.php";
+        }
+
+        isLoginFirst = !isLoginFirst;
+    });
+</script>
 
 </html>
