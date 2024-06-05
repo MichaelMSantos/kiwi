@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap');
+
+* {
+
+    font-family: "Kanit", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+
+}
+
+.login {
+    width: 350px;
+    box-shadow: 2px 4px 0 #07E86B;
+    padding: 50px 50px 50px 50px;
+    background-color: #1F1F1F;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 7%;
+}
+
+p {
+    color: #07E86B;
+    text-shadow: 1px 3px 30px #0f5c01;
+}
+
+.cadastro {
+    color: #07E86B;
+}
+
+input[type="email"],
+input[type="name"],
+input[type="password"], input[type="text"] {
+    background-color: #535353;
+    box-shadow: 3px 3px 0 #07E86B;
+    color: #fff;
+    outline: none;
+}
+
+input[type="text"] {
+    width: 250px;
+}
+input[type="submit"] {
+    background-color: #07E86B;
+    transition: 0.2s;
+}
+
+input[type="submit"]:hover {
+    transform: scale(1.1);
+    box-shadow: 1px 2px 20px #0f5c01;
+}
+
+.cadastrar {
+    text-decoration: underline;
+}
+
+.cadastrar:hover {
+    text-shadow: 1px 3px 30px #0f5c01;
+}
+
+h1 {
+    text-shadow: 1px 3px 20px #0f5c01;
+}
+
+h3 {
+    text-shadow: 1px 3px 30px #0f5c01;
+}
+
+
+.toggle-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.slogan {
+    width: 450px;
+}
+
+.primary {
+    background-color: #171810;
+}

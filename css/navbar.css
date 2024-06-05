@@ -1,0 +1,83 @@
+.login {
+    width: 23px;
+    height: 23px;
+    margin-right: 8px;
+}
+
+.background-nav {
+    background-color: #000;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 4px; 
+    transition: color 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #32a852; 
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.dark .nav-link:hover {
+    color: #32a852; 
+}
+
+/* DROPDOWN */
+
+.dropbtn {
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #171810;
+    min-width: 160px;
+    box-shadow:  3px 4px 10px rgba(14, 255, 46, 0.986);
+    z-index: 1;
+    left: -25px; 
+}
+
+.dropdown-content a {
+    color: #f1f1f1;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #222320;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
