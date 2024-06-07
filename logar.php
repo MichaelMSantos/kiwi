@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($senha === $stored_password) {
                 $_SESSION['email'] = $email;
                 echo "<script>alert('Entrada validada com sucesso!')</script>";
-                echo "<script>window.location.href='index.php';</script>";
+                echo "<script>window.location.href='cliente.php';</script>";
                 exit();
             } else {
                 echo "<script>alert('Email ou senha inválidos!')</script>";

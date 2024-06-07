@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 
@@ -15,33 +16,35 @@
     }
 
     .svg-green {
-        filter: invert(100%);
-    }
+            fill: green;
+        }
 </style>
 
 <body class="primary h-full">
-    <div class="w-full flex items-center">
-        <div class="flex-1">
+<div class="w-full flex justify-between pr-12 pl-12 pt-5">
+        <div class="">
             <a href="index.php">
-                <img src="./resources/icons/arrow-left.svg" class="h-10 ml-10 svg-green" alt="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" class="bi bi-arrow-left svg-green ml-16" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+            </svg>
             </a>
         </div>
-        <div class="flex-1 flex justify-center">
-            <img src="image/logo2.png" class="h-19 w-44" style="margin-top: 23px;">
+        <div class="justify-center">
+            <img src="image/logo2.png" class="h-14 w-44">
         </div>
-        <div class="flex-1">
-            <!-- Espaço vazio para centralização -->
+        <div class="text-white admin">
+            <a href="login.php">Cliente</a>
         </div>
     </div>
     <div class="flex justify-center">
         <div class="container mx-auto">
             <div class="login form-container">
-                <form id="loginForm" class="flex flex-col" action="logar.php">
+                <form id="loginForm" class="flex flex-col" method="POST" action="loginadmin.php">
                     <p class="text-3xl tracking-widest font-bold uppercase pb-10 text-center text-login">Administrador</p>
                     <div id="novoInput" style="display: none;" class="pb-5">
                         <input id="newInput" type="text" name="newInput" class="h-8" disabled>
                     </div>
-                    <label class="label text-white">Nome</label>
+                    <label class="label text-white">Email</label>
                     <input type="email" name="name" class="h-8">
                     <label class="label pt-5 text-white">Senha</label>
                     <input type="password" name="password" class="h-8">

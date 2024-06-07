@@ -20,19 +20,19 @@
 </head>
 
 <body class="primary h-full">
-    <div class="w-full flex items-center">
-        <div class="flex-1">
+    <div class="w-full flex justify-between pr-12 pl-12 pt-5">
+        <div class="">
             <a href="index.php">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" class="bi bi-arrow-left svg-green ml-16" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
             </svg>
             </a>
         </div>
-        <div class="flex-1 flex justify-center">
-            <img src="image/logo2.png" class="h-14 w-44" style="margin-top: 23px;">
+        <div class="justify-center">
+            <img src="image/logo2.png" class="h-14 w-44">
         </div>
-        <div class="flex-1">
-            <!-- Espaço vazio para centralização -->
+        <div class="text-white admin">
+            <a href="admin.php">Administrador</a>
         </div>
     </div>
     <div class="flex justify-center">

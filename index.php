@@ -98,7 +98,7 @@
         }
     }
 .background-kiwi {
-    background: none; /* Remova o gradient individual */
+    background: none;
 }
 </style>
 
@@ -131,6 +131,7 @@
                     </li>
                 </ul>
             </nav>
+            
             <div class="dropdown text-white text-sm font-medium flex items-center ml-auto relative pb-3">
                 <button class="dropbtn flex items-center">
                     <img src="./image/user.svg" class="login">
@@ -148,74 +149,72 @@
     <!-- PRODUTOS -->
     <div class="background-kiwi-container">
     <div class="background-kiwi w-full text-center" style="height: 768px;">
-        <h2 id="produtos" class="text-white pt-10 pb-12 text-title text-5xl">Nossos <span
-                class="text-title">Produtos</span></h2>
+        <h2 id="produtos" class="text-white pt-10 pb-12 text-title text-5xl">Nossos <span class="text-title">Produtos</span></h2>
 
-                <div class="produtos swiper-container">
-    <div class="swiper-wrapper">
-        <?php
-        $servername = "127.0.0.1";
-        $username = "root";
-        $password = "";
-        $dbname = "kiwi";
+        <div class="produtos swiper-container">
+            <div class="swiper-wrapper">
+                <?php
+                $servername = "127.0.0.1";
+                $username = "root";
+                $password = "";
+                $dbname = "kiwi";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+                $conn = new mysqli($servername, $username, $password, $dbname);
 
-        if ($conn->connect_error) {
-            die("Falha ao conectar " . $conn->connect_error);
-        }
-
-        $sql = "SELECT * FROM produtos";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $descricao = $row['descricao'];
-                $descricao_display = '';
-                if (strlen($descricao) > 500) {
-                    $descricao_display = substr($descricao, 0, 500) . "... <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($descricao) . "'>Ver mais</button>";
-                } else {
-                    $descricao_display = $descricao;
+                if ($conn->connect_error) {
+                    die("Falha ao conectar " . $conn->connect_error);
                 }
-                
-                echo '
-                <aside class="swiper-slide">
-                    <div class="card-container">
-                        <div class="card text-white" id="flip-card">
-                            <div class="card-front p-4">
-                                <figure>
-                                    <img class="card-image" src="' . $row["imagem"] . '" alt="" title="">
-                                    <figcaption class="card-title">' . $row["nome"] . '</figcaption>
-                                    <p class="card-price">R$ ' . $row["valor"] . '</p>
-                                    <div class="buttons-card">
-                                        <button class="comprar" data-id="' . $row["id"] . '" onclick="addToCart(this)">COMPRAR</button>
-                                        <button class="card-button" onclick="flipCard(this)">Ler</button>
+
+                $sql = "SELECT * FROM produtos";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $descricao = $row['descricao'];
+                        $descricao_display = '';
+                        if (strlen($descricao) > 500) {
+                            $descricao_display = substr($descricao, 0, 500) . "... <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($descricao) . "'>Ver mais</button>";
+                        } else {
+                            $descricao_display = $descricao;
+                        }
+                        
+                        echo '
+                            <aside class="swiper-slide">
+                                <div class="card-container">
+                                    <div class="card text-white" id="flip-card">
+                                        <div class="card-front p-4">
+                                            <figure>
+                                                <img class="card-image" src="' . $row["imagem"] . '" alt="" title="">
+                                                <figcaption class="card-title">' . $row["nome"] . '</figcaption>
+                                                <p class="card-price">R$ ' . $row["valor"] . '</p>
+                                                <div class="buttons-card">
+                                                    <button class="comprar" data-id="' . $row["id"] . '">COMPRAR</button>
+                                                    <button class="card-button" onclick="flipCard(this)">Ler</button>
+                                                </div>
+                                            </figure>
+                                        </div>
+                                        <div class="card-back flex flex-col p-10">
+                                            <p>
+                                                <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
+                                                ' . $descricao_display . '
+                                            </p>
+                                            <button class="card-button" onclick="flipCard(this)">Voltar</button>
+                                        </div>
                                     </div>
-                                </figure>
-                            </div>
-                            <div class="card-back flex flex-col p-10">
-                                <p>
-                                    <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
-                                    ' . $descricao_display . '
-                                </p>
-                                <button class="card-button" onclick="flipCard(this)">Voltar</button>
-                            </div>
-                        </div>
-                    </div>
-                </aside>';                                
-            }
-        } else {
-            echo "0 resultados";
-        }
-        $conn->close();
-        ?>
-    </div>
+                                </div>
+                            </aside>';
+                                                    
+                    }
+                } else {
+                    echo "0 resultados";
+                }
+                $conn->close();
+                ?>
+            </div>
 
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</div>
-
-
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
     </div>
     <!-- Fim Produtos -->
 
@@ -279,13 +278,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne">
-                                    ?
+                                    Quanto tempo dura a garantia dos produtos?
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample1">
                                 <div class="accordion-body">
-                                    Resposta
+                                    A duração da garantia varia conforme o produto e o fabricante. A maioria dos nossos produtos vem com uma garantia mínima de 12 meses.
                                 </div>
                             </div>
                         </div>
@@ -298,13 +297,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                     aria-controls="flush-collapseTwo">
-                                    ?
+                                    Como faço para devolver ou trocar um produto?
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample2">
                                 <div class="accordion-body">
-                                    Resposta
+                                Para devolver ou trocar um produto, entre em contato com nosso suporte ao cliente pelo email <span class="text-title">suporte@kiwi.com</span>. Informe o motivo da devolução ou troca dentro do prazo de 30 dias após a entrega.
                                 </div>
                             </div>
                         </div>
@@ -317,13 +316,13 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">
-                                    ?
+                                    Posso alterar ou cancelar meu pedido após a confirmação?
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample3">
                                 <div class="accordion-body">
-                                    Resposta
+                                Trabalhamos para processar os pedidos o mais rápido possível, por isso, as alterações ou cancelamentos só são permitidos dentro de um curto período após a confirmação do pedido.
                                 </div>
                             </div>
                         </div>
@@ -401,70 +400,109 @@
     </div>
 </div>
 
+    <!-- Modal para exibir a descrição completa -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="descriptionModalLabel">Descrição Completa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="description-container">
+                        <p id="fullDescription"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do botao comprar -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login Requerido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Por favor, faça login para continuar.
+                </div>
+                <div class="modal-footer">
+                    <a href="login.php" class="btn btn-primary">Login</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/gradient.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const comprarButtons = document.querySelectorAll('.comprar');
+
+            comprarButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    loginModal.show();
+                });
+            });
+        });
 
         function screenTop() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
         function flipCard(button) {
             const card = button.closest('.card');
             card.classList.toggle('is-flipped');
         }
+
         window.onload = function () {
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 4,
+                spaceBetween: 10,
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 10,
+                    },
+                    1280: {
+                        slidesPerView: 4,
+                        spaceBetween: 10,
+                    },
+                }
+            });
 
-var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween: 10,
-    loop: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-        },
-        768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        1200: {
-            slidesPerView: 4,
-            spaceBetween: 10,
+            const viewMoreButtons = document.querySelectorAll('.view-more');
+            const fullDescription = document.getElementById('fullDescription');
+
+            viewMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    fullDescription.innerHTML = this.getAttribute('data-description');
+                });
+            });
         }
-    }
-});
-
-function slider() {
-    swiper.slideNext(); 
-}
-
-setInterval(slider, 5000);
-
-}
-document.addEventListener("DOMContentLoaded", function () {
-    const viewMoreButtons = document.querySelectorAll(".view-more");
-
-    viewMoreButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const description = this.getAttribute("data-description");
-            document.getElementById("fullDescription").textContent = description;
-        });
-    });
-});
-
     </script>
 </body>
 
