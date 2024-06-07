@@ -137,7 +137,7 @@
                     Login
                 </button>
                 <div class="dropdown-content absolute">
-                    <a href="login.html">Cliente</a>
+                    <a href="login.php">Cliente</a>
                     <a href="admin.html">Administrador</a>
                 </div>
             </div>
@@ -152,70 +152,69 @@
                 class="text-title">Produtos</span></h2>
 
                 <div class="produtos swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"></div>
-                        <?php
+    <div class="swiper-wrapper">
+        <?php
+        $servername = "127.0.0.1";
+        $username = "root";
+        $password = "";
+        $dbname = "kiwi";
 
-                        $servername = "127.0.0.1";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "kiwi";
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-                        $conn = new mysqli($servername, $username, $password, $dbname);
+        if ($conn->connect_error) {
+            die("Falha ao conectar " . $conn->connect_error);
+        }
 
-                        if ($conn->connect_error) {
-                            die("Falha ao conectar " . $conn->connect_error);
-                        }
+        $sql = "SELECT * FROM produtos";
+        $result = $conn->query($sql);
 
-                        $sql = "SELECT * FROM produtos";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                $descricao = $row['descricao'];
-                                $descricao_display = '';
-                                if (strlen($descricao) > 500) {
-                                    $descricao_display = substr($descricao, 0, 500) . "... <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($descricao) . "'>Ver mais</button>";
-                                } else {
-                                    $descricao_display = $descricao;
-                                }
-                                
-                                echo '
-                                <aside class="swiper-slide">
-                                    <div class="card-container">
-                                        <div class="card text-white" id="flip-card">
-                                            <div class="card-front p-4">
-                                                <figure>
-                                                    <img class="card-image" src="' . $row["imagem"] . '" alt="" title="">
-                                                    <figcaption class="card-title">' . $row["nome"] . '</figcaption>
-                                                    <p class="card-price">R$ ' . $row["valor"] . '</p>
-                                                    <div class="buttons-card">
-                                                        <button class="comprar" data-id="' . $row["id"] . '" onclick="addToCart(this)">COMPRAR</button>
-                                                        <button class="card-button" onclick="flipCard(this)">Ler</button>
-                                                    </div>
-                                                </figure>
-                                            </div>
-                                            <div class="card-back flex flex-col p-10">
-                                                <p>
-                                                    <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
-                                                    ' . $descricao_display . '
-                                                </p>
-                                                <button class="card-button" onclick="flipCard(this)">Voltar</button>
-                                            </div>
-                                        </div>
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $descricao = $row['descricao'];
+                $descricao_display = '';
+                if (strlen($descricao) > 500) {
+                    $descricao_display = substr($descricao, 0, 500) . "... <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($descricao) . "'>Ver mais</button>";
+                } else {
+                    $descricao_display = $descricao;
+                }
+                
+                echo '
+                <aside class="swiper-slide">
+                    <div class="card-container">
+                        <div class="card text-white" id="flip-card">
+                            <div class="card-front p-4">
+                                <figure>
+                                    <img class="card-image" src="' . $row["imagem"] . '" alt="" title="">
+                                    <figcaption class="card-title">' . $row["nome"] . '</figcaption>
+                                    <p class="card-price">R$ ' . $row["valor"] . '</p>
+                                    <div class="buttons-card">
+                                        <button class="comprar" data-id="' . $row["id"] . '" onclick="addToCart(this)">COMPRAR</button>
+                                        <button class="card-button" onclick="flipCard(this)">Ler</button>
                                     </div>
-                                </aside>';                                
-                            }
-                        } else {
-                            echo "0 resultados";
-                        }
-                        $conn->close();
-                        ?>
+                                </figure>
+                            </div>
+                            <div class="card-back flex flex-col p-10">
+                                <p>
+                                    <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
+                                    ' . $descricao_display . '
+                                </p>
+                                <button class="card-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
                     </div>
+                </aside>';                                
+            }
+        } else {
+            echo "0 resultados";
+        }
+        $conn->close();
+        ?>
+    </div>
 
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
 
     </div>
     <!-- Fim Produtos -->

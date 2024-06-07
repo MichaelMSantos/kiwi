@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="perfil.php" class="sidebar-link">
                         <i class="fa-solid fa-user"></i>
                             Perfil
                         </a>

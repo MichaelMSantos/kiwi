@@ -22,18 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        echo "Nome: " . htmlspecialchars($nome) . "<br>";
-        echo "Email: " . htmlspecialchars($email) . "<br>";
-        echo "Senha: " . htmlspecialchars($password) . "<br>";
+        // Usando prepared statements para evitar SQL injection
+        $stmt = $conn->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $nome, $email, $password);
 
-        $sql = "INSERT INTO users (nome, email, senha) VALUES ('$nome', '$email', '$password')";
-
-        if ($conn->query($sql) === TRUE) {
+        if ($stmt->execute() === TRUE) {
             echo "Novo registro criado com sucesso";
         } else {
-            echo "Erro: " . $sql . "<br>" . $conn->error;
+            echo "Erro: " . $stmt->error;
         }
 
+        $stmt->close();
         $conn->close();
     } else {
         echo "Campos obrigatórios não preenchidos.";

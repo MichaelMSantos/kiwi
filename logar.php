@@ -1,4 +1,8 @@
-<?php 
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,28 +18,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Falha na conexão com o banco de dados: " . $conn->connect_error);
     }   
 
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
+    $email = $_POST['email'];
+    $senha = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * from users where email = ? and senha = ?");
-    $stmt->bind_param("ss", $email, $senha);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if ($email && $senha) {
+        $stmt = $conn->prepare("SELECT senha FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if($result->num_rows < 1) {
-        unset($_SESSION['email']);
-        unset($_SESSION['senha']);
-        echo "<script>alert('Esse email ou senha invalidos!')</script>";
-        header('location: login.php');
-        exit();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $stored_password = $row['senha'];
+
+            if ($senha === $stored_password) {
+                $_SESSION['email'] = $email;
+                echo "<script>alert('Entrada validada com sucesso!')</script>";
+                echo "<script>window.location.href='index.php';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Email ou senha inválidos!')</script>";
+                echo "<script>window.location.href='login.php';</script>";
+                exit();
+            }
+        } else {
+            echo "<script>alert('Email ou senha inválidos!')</script>";
+            echo "<script>window.location.href='login.php';</script>";
+            exit();
+        }
+
+        $stmt->close();
     } else {
-        $_SESSION['email'] = $email;
-        $_SESSION['senha'] = $senha;
-        header('location: index.php');
+        echo "<script>alert('Preencha todos os campos!')</script>";
+        echo "<script>window.location.href='login.php';</script>";
         exit();
     }
+
+    $conn->close();
 }
-?>
-
-
 ?>

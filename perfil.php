@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+$servername = '127.0.0.1';
+$username = 'root';
+$password = '';
+$dbname = 'kiwi';
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if($conn->connect_error) {
+    die("Falha na conexão com o banco de dados " . $conn->connect_error);
+}
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -14,7 +33,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(39 39 42);">
             <div class="container-fluid d-flex justify-content-between">
                 <div>
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="dashboard.php">
                         <img src="./image/arrow-left.svg" alt="">
                     </a>
                 </div>
