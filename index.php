@@ -71,11 +71,6 @@
     .btnInicio {
         transition: .2s all;
     }
-
-    .swiper-slide:first-child {
-    flex: 1;
-}
-
 * {
         padding: 0;
         margin: 0;
@@ -83,46 +78,31 @@
     }
 
     .background-kiwi-container {
-        background: linear-gradient(45deg, #195D19, #195D19, rgba(23,24,16,1), rgba(23,24,16,1));
-    width: 100%;
-    background-size: 400% 400%; /* Ajuste conforme necessário */
-    background-position: 0 50%;
-    animation: color 10s ease-in-out infinite;
-}
+        width: 100%;
+        background: linear-gradient(45deg, #040504, #040504, #195D19, #195D19);
+        background-size: 300% 300%;
+        animation: color 5s ease-in-out infinite;
+    }
 
+    @keyframes color {
+        0% {
+            background-position: 0 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0 50%;
+        }
+    }
 .background-kiwi {
     background: none; /* Remova o gradient individual */
 }
-
-@keyframes color {
-    0% {
-        background-position: 0 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0 50%;
-    }
-}
-
 </style>
 
 <body class="h-auto antialiased dark">
-    <!-- VLIBRAS -->
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-    <!-- FIM VLIBRAS -->
     <!-- NAV -->
     <div class="background-nav w-full h-28 flex flex-col items-start">
         <img src="./image/logo2.png" alt="Logo da Kiwi" class="h-16 w-44 pt-3 pl-10">
@@ -192,6 +172,14 @@
 
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
+                                $descricao = $row['descricao'];
+                                $descricao_display = '';
+                                if (strlen($descricao) > 500) {
+                                    $descricao_display = substr($descricao, 0, 500) . "... <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($descricao) . "'>Ver mais</button>";
+                                } else {
+                                    $descricao_display = $descricao;
+                                }
+                                
                                 echo '
                                 <aside class="swiper-slide">
                                     <div class="card-container">
@@ -202,21 +190,21 @@
                                                     <figcaption class="card-title">' . $row["nome"] . '</figcaption>
                                                     <p class="card-price">R$ ' . $row["valor"] . '</p>
                                                     <div class="buttons-card">
-                                                    <button class="comprar" data-id="' . $row["id"] . '" onclick="addToCart(this)">COMPRAR</button>
+                                                        <button class="comprar" data-id="' . $row["id"] . '" onclick="addToCart(this)">COMPRAR</button>
                                                         <button class="card-button" onclick="flipCard(this)">Ler</button>
                                                     </div>
                                                 </figure>
                                             </div>
                                             <div class="card-back flex flex-col p-10">
                                                 <p>
-                                                <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
-                                                ' . $row["descricao"] . '
+                                                    <h5>ESPECIFICAÇÕES TÉCNICAS</h5>
+                                                    ' . $descricao_display . '
                                                 </p>
                                                 <button class="card-button" onclick="flipCard(this)">Voltar</button>
                                             </div>
                                         </div>
                                     </div>
-                                </aside>';
+                                </aside>';                                
                             }
                         } else {
                             echo "0 resultados";
@@ -279,7 +267,7 @@
     <!-- Fim Serviços -->
 
     <!-- FAQ -->
-    <div id="ajuda" class="faq bg-secondary gradient-effect" style="height: 378px;">
+    <div id="ajuda" class="faq background-kiwi gradient-effect" style="height: 378px;">
         <h1 class="text-title text-center text-5xl pb-10">
             Perguntas Frequentes
         </h1>
@@ -390,17 +378,42 @@
                         <a href="https://api.whatsapp.com/send?phone=SEUNUMEROAQUI" target="_blank"
                             style="text-decoration: none;"><i class="bi bi-whatsapp text-gray-300"></i></a>
                     </div>
-                </div>
+                 </div>
             </div>
 
-        </div>
+         </div>
     </div>
     <!-- Fim AJUDA-->
+
+      <!-- Modal para exibir a descrição completa -->
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Descrição Completa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="description-container">
+                    <p id="fullDescription"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="js/gradient.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
 
+        function screenTop() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
         function flipCard(button) {
             const card = button.closest('.card');
             card.classList.toggle('is-flipped');
@@ -439,9 +452,19 @@ function slider() {
     swiper.slideNext(); 
 }
 
-setInterval(slider, 2000);
+setInterval(slider, 5000);
 
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const viewMoreButtons = document.querySelectorAll(".view-more");
+
+    viewMoreButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const description = this.getAttribute("data-description");
+            document.getElementById("fullDescription").textContent = description;
+        });
+    });
+});
 
     </script>
 </body>

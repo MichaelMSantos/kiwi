@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST["nome"];
     $descricao = $_POST["descricao"];
     $valor = $_POST["valor"];
+    $valor = str_replace('.', '', $valor);
+    $valor = str_replace(',', '.', $valor);
+
+    $valor_formatado = (float) $valor;
 
     $imagem_updated = false;
     $target_file = "";
@@ -46,14 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $update = "UPDATE produtos SET nome='$nome', descricao='$descricao', valor='$valor'";
+    $update = "UPDATE produtos SET nome='$nome', descricao='$descricao', valor='$valor_formatado'";
     if ($imagem_updated) {
         $update .= ", imagem='$target_file'";
     }
     $update .= " WHERE id='$id'";
 
     if ($conn->query($update) === TRUE) {
-        echo json_encode(array("message" => "Produto atualizado com sucesso."));
+        echo json_encode(["message" => "Produto atualizado com sucesso!"]);
         header('Location: dashboard.php');
     } else {
         echo json_encode(array("message" => "Erro ao atualizar o produto: " . $conn->error));

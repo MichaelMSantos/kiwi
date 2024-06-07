@@ -16,6 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descricao = $_POST["descricao"];
     $valor = $_POST["valor"];
 
+    $valor = str_replace('.', '', $valor);
+    $valor = str_replace(',', '.', $valor);
+
+    $valor_formatado = (float) $valor;
+
     if (isset($_FILES["imagem"])) {
         if ($_FILES["imagem"]["error"] == 0) {
             $imagem_temp = $_FILES["imagem"]["tmp_name"];
@@ -24,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $target_file = $target_dir . $imagem_name;
 
             if (move_uploaded_file($imagem_temp, $target_file)) {
-                $insert = "INSERT INTO produtos (nome, descricao, valor, imagem) VALUES ('$nome', '$descricao', '$valor', '$target_file')";
+                $insert = "INSERT INTO produtos (nome, descricao, valor, imagem) VALUES ('$nome', '$descricao', '$valor_formatado', '$target_file')";
                 
                 if ($conn->query($insert) === TRUE) {
                     echo "Novo produto adicionado com sucesso.";
@@ -60,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         width: 10rem;
     }
     .description-container {
-        word-wrap: break-word; /* Para quebrar palavras longas */
-        overflow-wrap: break-word; /* Para quebra de linha no texto longo */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 </style>
 <body>
@@ -164,9 +169,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         
                                         if ($result !== false && $result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
+                                                $valor = $row['valor'];
+                                                if ($valor !== null) {
+                                                    $valor_atualizado = number_format($valor, 2, ',', '.');
+                                                } else {
+                                                    $valor_atualizado = '0,00'; 
+                                                }
+                                            
                                                 echo "<tr>";
                                                 echo "<th scope='row'><img class='img-table' src='" . $row['imagem'] . "'></th>";
-                                                echo "<td>" . $row['nome'] . "</td>";
+                                                echo "<td>"; 
+                                                $nome = $row['nome'];
+                                                if(strlen($nome) > 20) {
+                                                    echo substr($nome, 0 , 20). "...";
+                                                    echo " <button class='btn btn-link btn-sm view-more' data-bs-toggle='modal' data-bs-target='#descriptionModal' data-description='" . htmlspecialchars($nome) . "'>Ver mais</button>";
+                                                } else {
+                                                    echo $nome;
+                                                }
+                                                echo "</td>";
                                                 echo "<td>";
                                                 $descricao = $row['descricao'];
                                                 if (strlen($descricao) > 30) {
@@ -176,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     echo $descricao;
                                                 }
                                                 echo "</td>";
-                                                echo "<td>" . $row['valor'] . "</td>";
+                                                echo "<td>R$ " . $valor_atualizado . "</td>";
                                                 echo "<td>";
                                                 echo "<button class='btn btn-warning edit-btn btn-sm' data-bs-toggle='modal' data-bs-target='#editModal' data-id='" . $row['id'] ."'>Editar</button>";
                                                 echo " ";
@@ -184,7 +204,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 echo "</td>";
                                                 echo "</tr>";
                                             }
-                                        } else {
+                                            
+                                         } else {
                                             echo "<tr><td colspan='5'>Nenhum produto encontrado.</td></tr>";
                                         }
                                         
@@ -242,12 +263,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="mb-3">
                             <label for="productDescription" class="form-label">Descrição</label>
-                            <textarea class="form-control" name="descricao" id="productDescription" rows="3" placeholder="Descrição do Produto" maxlength="280" oninput="updateCharCount()"></textarea>
-                            <small id="charCount" class="form-text text-muted">280 caracteres restantes</small>
+                            <textarea class="form-control" name="descricao" id="productDescription" rows="3" placeholder="Descrição do Produto"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="productPrice" class="form-label">Valor</label>
-                            <input type="number" name="valor" class="form-control" id="productPrice" placeholder="Valor do Produto">
+                            <input type="text" name="valor" class="form-control" id="productPrice" placeholder="Valor do Produto" oninput="formatCurrency(this)">
                         </div>
                         <div class="mb-3">
                             <label for="productImage" class="form-label">Imagem do Produto</label>
@@ -276,13 +296,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="mb-3">
                                 <label for="editDescription" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="editDescription" name="descricao" maxlength="280" oninput="updateCharCount('editDescription', 'editCharCount')"></textarea>
-                                <small id="editCharCount" class="form-text text-muted">280 caracteres restantes</small>
+                                <textarea class="form-control" id="editDescription" name="descricao"></textarea>
                             </div>
-                        <div class="mb-3">
-                            <label for="editPrice" class="form-label">Valor</label>
-                            <input type="number" class="form-control" id="editPrice" name="valor">
-                        </div>
+                            <div class="mb-3">
+                                <label for="editPrice" class="form-label">Valor</label>
+                                <input type="text" class="form-control" id="editPrice" name="valor" oninput="formatCurrency(this)">
+                            </div>
+
+                                <script>
+                                function formatCurrency(input) {
+                                    let value = input.value.replace(/\D/g, '');
+                                    value = (value / 100).toFixed(2) + '';
+                                    value = value.replace(".", ",");
+                                    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                                    input.value = value;
+                                }
+                                </script>
+
                         <div class="mb-3">
                             <label for="editImage" class="form-label">Imagem do Produto</label>
                             <input type="file" class="form-control" id="editImage" name="imagem">
@@ -401,29 +431,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-function updateCharCount() {
-            const textarea = document.getElementById('productDescription');
-            const charCount = document.getElementById('charCount');
-            const remaining = 280 - textarea.value.length;
-            charCount.textContent = `${remaining} caracteres restantes`;
-        }
-
-        function updateCharCount(textareaId, counterId) {
-            const textarea = document.getElementById(textareaId);
-            const counter = document.getElementById(counterId);
-            const remaining = 280 - textarea.value.length;
-            counter.textContent = `${remaining} caracteres restantes`;
-        }
-
-        document.getElementById('productDescription').addEventListener('input', () => {
-            updateCharCount('productDescription', 'charCount');
-        });
-
-        document.getElementById('editDescription').addEventListener('input', () => {
-            updateCharCount('editDescription', 'editCharCount');
-        });
-
     </script>
 
 </body>

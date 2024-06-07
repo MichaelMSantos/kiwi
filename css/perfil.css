@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.75rem;
+}
+
+.content-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgb(39 39 42);
+    width: 100%;
+    border-top-width: .1px;
+    padding-right: 8rem;
+    padding-left: 8rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    min-height: 4rem;
+    max-height: 4rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.logo {
+    height: 3rem;
+}
+.cards {
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cards h2 {
+    font-weight: 600;
+    font-size: 1.125rem; 
+    line-height: 1.75rem;
+}
+.cards p {
+    font-size: 0.875rem;
+    line-height: 1.75rem;
+}
+.card {
+    background-color: rgb(39 39 42);   
+    border: none;
+    padding: 32px;
+    width: 60rem;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.card-delete {
+    margin-bottom: 20px;
+}
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario input {
+    background-color: rgb(63 63 70);
+    border: solid;
+    border-width: 1px;
+    border-color:  rgb(82 82 91);
+    border-radius: 10px;
+    width: 32rem;
+    height: 2.25rem;
+    padding-left: 3px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    
+}
+
+.second-label {
+    margin-top: 20px;
+}
+
+.formulario button {
+    background-color: rgb(65,152,115);
+    margin-top: 20px;
+    width: 7rem;
+    padding: 3px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.btn-danger {
+    width: 7rem;
+}
