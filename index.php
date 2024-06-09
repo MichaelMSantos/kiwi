@@ -355,7 +355,7 @@
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
                         Meus pedidos
                     </p>
-                    <a href="" class="text-lg text-gray-400">Acompanhe seu pedido</a>
+                    <a href="#" id="linkAcompanhePedido" class="text-lg text-gray-400" data-bs-toggle='modal' data-bs-target='#loginModal'>Acompanhe seu pedido</a>
                 </div>
                 <div class="col">
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
@@ -400,22 +400,6 @@
     </div>
 </div>
 
-    <!-- Modal para exibir a descrição completa -->
-    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="descriptionModalLabel">Descrição Completa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="description-container">
-                        <p id="fullDescription"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal do botao comprar -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -442,16 +426,23 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const comprarButtons = document.querySelectorAll('.comprar');
+        const comprarButtons = document.querySelectorAll('.comprar');
+        const linkAcompanhePedido = document.getElementById('linkAcompanhePedido');
 
-            comprarButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                    loginModal.show();
-                });
+        comprarButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
             });
         });
+
+        linkAcompanhePedido.addEventListener('click', function(event) {
+            event.preventDefault();
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        });
+    });
 
         function screenTop() {
             window.scrollTo({

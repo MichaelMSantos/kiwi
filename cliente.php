@@ -435,7 +435,7 @@ if ($result->num_rows > 0) {
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
                         Meus pedidos
                     </p>
-                    <a href="" class="text-lg text-gray-400">Acompanhe seu pedido</a>
+                    <a href="meus_pedidos.php" class="text-lg text-gray-400">Acompanhe seu pedido</a>
                 </div>
                 <div class="col">
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">

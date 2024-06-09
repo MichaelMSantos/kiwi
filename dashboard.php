@@ -78,9 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <hr>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="pedidos_clientes.php" class="sidebar-link">
                             <i class="fa-solid fa-list pe-2"></i>
-                            Dashboard
+                            Gerenciar Pedidos
                         </a>
                     </li>
                     <li class="sidebar-item">
