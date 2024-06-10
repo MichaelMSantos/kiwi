@@ -16,11 +16,13 @@ session_start();
         echo "<script>window.location.href='login.php'</script>";
     }
 
-$sql_pedidos = "SELECT p.id_pedido, p.data_pedido, ip.id_produto, ip.quantidade, ip.status, pr.nome, pr.imagem, u.email AS email_cliente
-FROM pedidos p 
-JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido 
-JOIN produtos pr ON ip.id_produto = pr.id
-JOIN users u ON p.email_cliente = u.email";
+    $sql_pedidos = "SELECT p.id_pedido, p.data_pedido, ip.id_produto, ip.quantidade, ip.status, pr.nome, pr.imagem, u.email AS email_cliente
+    FROM pedidos p 
+    JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido 
+    JOIN produtos pr ON ip.id_produto = pr.id
+    JOIN users u ON p.email_cliente = u.email 
+    ORDER BY p.data_pedido DESC";
+    
 
 $result_pedidos = $conn->query($sql_pedidos);
 
@@ -289,7 +291,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
 
         function goToPage(pageNumber) {
             var rows = document.querySelectorAll('#productTable tbody tr');
-            var rowsPerPage = 5;
+            var rowsPerPage = 3;
             var totalPages = Math.ceil(rows.length / rowsPerPage);
 
             rows.forEach(function(row) {
