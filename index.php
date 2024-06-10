@@ -355,13 +355,13 @@
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
                         Meus pedidos
                     </p>
-                    <a href="#" id="linkAcompanhePedido" class="text-lg text-gray-400" data-bs-toggle='modal' data-bs-target='#loginModal'>Acompanhe seu pedido</a>
+                    <a href="#" class="text-lg text-gray-400" data-bs-toggle='modal' data-bs-target='#loginModal'>Acompanhe seu pedido</a>
                 </div>
                 <div class="col">
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
                         Central de atendimento
                     </p>
-                    <p class="text-lg text-gray-400 font-medium">0000-0000 <a href="https://api.whatsapp.com/send?phone=SEUNUMEROAQUI" target="_blank" class="pl-3 text-gray-400">Fale pelo Whatsapp<i class="ml-1 bi bi-whatsapp text-gray-400"></i></a></p>
+                    <p class="text-lg text-gray-400 font-medium">(11) 9837-6110  <a href="https://api.whatsapp.com/send?phone=SEUNUMEROAQUI" target="_blank" class="pl-3 text-gray-400">Fale pelo Whatsapp<i class="ml-1 bi bi-whatsapp text-gray-400"></i></a></p>
                 </div>
             </div>
             <div class="redes-sociais mt-11">
@@ -427,7 +427,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         const comprarButtons = document.querySelectorAll('.comprar');
-        const linkAcompanhePedido = document.getElementById('linkAcompanhePedido');
 
         comprarButtons.forEach(button => {
             button.addEventListener('click', function(event) {
@@ -435,12 +434,6 @@
                 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                 loginModal.show();
             });
-        });
-
-        linkAcompanhePedido.addEventListener('click', function(event) {
-            event.preventDefault();
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
         });
     });
 
@@ -484,6 +477,11 @@
                     },
                 }
             });
+            function slider() {
+                swiper.slideNext(); 
+            }
+
+            setInterval(slider, 5000);
 
             const viewMoreButtons = document.querySelectorAll('.view-more');
             const fullDescription = document.getElementById('fullDescription');

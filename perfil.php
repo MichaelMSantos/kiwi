@@ -52,8 +52,8 @@
             <nav class="navbar navbar-expand-lg" style="background-color: rgb(39 39 42);">
                 <div class="container-fluid d-flex justify-content-between">
                     <div>
-                        <a class="navbar-brand" href="cliente.php">
-                            <img src="./image/arrow-left.svg" alt="">
+                        <a class="navbar-brand" href="#">
+                            <img src="./image/arrow-left.svg" alt="" onclick="voltar()">
                         </a>
                     </div>
                     <div>
@@ -82,7 +82,7 @@
                         <input type="text" name="nome" value="<?php echo $user['nome']; ?>">
                         <label class="second-label">Email</label>
                         <input type="email" name="email" value="<?php echo $user['email']; ?>">
-                        <button type="submit"> Atualizar </button>
+                        <button type="submit" id="atualizarNome"> Atualizar </button>
                     </form>
                 </div>
                 <div class="card-password card">
@@ -95,7 +95,7 @@
                         <input type="password" name="nova_senha">
                         <label class="second-label">Confirmar senha</label>
                         <input type="password" name="confirmar_senha">
-                        <button type="submit"> Atualizar </button>
+                        <button type="submit" id="atualizarSenha"> Atualizar </button>
                     </form>
                 </div>
                 <div class="card-delete card">
@@ -143,8 +143,12 @@
             formExclusao.submit();
         });
     });
+    
+    function voltar() {
+        window.history.go(-1);
+    }
 </script>
-
+  
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

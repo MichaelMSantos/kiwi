@@ -81,7 +81,7 @@
     margin-top: 20px;
 }
 
-.formulario button {
+#atualizarNome, #atualizarSenha {
     background-color: rgb(65,152,115);
     margin-top: 20px;
     width: 7rem;
@@ -92,5 +92,10 @@
 }
 
 .btn-danger {
+    margin-top: 20px;
     width: 7rem;
+    padding: 3px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);   
 }

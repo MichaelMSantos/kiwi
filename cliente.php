@@ -441,7 +441,7 @@ if ($result->num_rows > 0) {
                     <p class="footer-titles text-xl uppercase font-medium text-gray-300">
                         Central de atendimento
                     </p>
-                    <p class="text-lg text-gray-400 font-medium">0000-0000 <a href="https://api.whatsapp.com/send?phone=SEUNUMEROAQUI" target="_blank" class="pl-3 text-gray-400">Fale pelo Whatsapp<i class="ml-1 bi bi-whatsapp text-gray-400"></i></a></p>
+                    <p class="text-lg text-gray-400 font-medium">(11) 9837-6110 <a href="https://api.whatsapp.com/send?phone=SEUNUMEROAQUI" target="_blank" class="pl-3 text-gray-400">Fale pelo Whatsapp<i class="ml-1 bi bi-whatsapp text-gray-400"></i></a></p>
                 </div>
             </div>
             <div class="redes-sociais mt-11">
