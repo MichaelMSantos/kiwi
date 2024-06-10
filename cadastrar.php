@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sss", $nome, $email, $password);
 
         if ($stmt->execute() === TRUE) {
-            echo "Novo registro criado com sucesso";
+            echo "<script>alert('Conta criada com sucesso')</script>";
         } else {
             echo "Erro: " . $stmt->error;
         }
@@ -35,9 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
         $conn->close();
     } else {
-        echo "Campos obrigatórios não preenchidos.";
+        echo "<script>alert('Campos obrigatórios não preenchidos.')</script>";
     }
 } else {
-    echo "Método de requisição inválido.";
+    echo "<script>alert('Método de requisição inválido.')</script>";
 }
 ?>

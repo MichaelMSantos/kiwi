@@ -1,5 +1,33 @@
 <?php
 session_start();
+
+$servername = '127.0.0.1';
+$username = 'root';
+$password = '';
+$dbname = 'kiwi';
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if (!isset($_SESSION['email'])) {
+    echo "<script>alert('Faça o login para continuar');</script>";
+    echo "<script>window.location.href='login.php';</script>";
+    exit();
+}
+
+$email = $_SESSION['email'];
+
+$sql = "SELECT nome, email FROM users WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+} else {
+    echo "Usuário não encontrado.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -40,7 +68,7 @@ session_start();
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Cliente
+                            <?php echo $user['nome']; ?>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li><a class="dropdown-item" href="logout.php">Deslogar</a></li>
@@ -126,9 +154,7 @@ session_start();
                             echo "<tr><td colspan='5'>Nenhum pedido encontrado.</td></tr>";
                         }
                         
-                        
-                        $stmt_pedidos->close();
-                        $stmt_itens->close();
+                
                         $conn->close();
                         ?>
                     </tbody>

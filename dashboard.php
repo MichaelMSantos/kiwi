@@ -1,4 +1,10 @@
 <?php 
+    session_start();
+    if((isset($_SESSION["usertype"]) == "0")){
+        echo "<script>alert('Apenas funcionários tem acesso a essa página!');</script>";
+        echo "<script>window.location.href='index.php'</script>";
+    }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $server = "127.0.0.1";
@@ -90,7 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="index.php" class="sidebar-link">
+                        <a href="cliente.php" class="sidebar-link">
+                           Inicio 
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="logout.php" class="sidebar-link">
                         <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
                             Sair
                         </a>

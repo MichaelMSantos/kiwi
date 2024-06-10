@@ -139,7 +139,7 @@
                 </button>
                 <div class="dropdown-content absolute">
                     <a href="login.php">Cliente</a>
-                    <a href="admin.html">Administrador</a>
+                    <a href="admin.php">Administrador</a>
                 </div>
             </div>
         </div>

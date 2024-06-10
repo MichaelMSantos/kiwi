@@ -10,6 +10,12 @@ if ($conn->connect_error) {
     die("Falha na conexão com o banco de dados: " . $conn->connect_error);
 }
 
+session_start();
+    if((isset($_SESSION["usertype"]) == "0")){
+        echo "<script>alert('Apenas funcionários tem acesso a essa página!');</script>";
+        echo "<script>window.location.href='login.php'</script>";
+    }
+
 $sql_pedidos = "SELECT p.id_pedido, p.data_pedido, ip.id_produto, ip.quantidade, ip.status, pr.nome, pr.imagem, u.email AS email_cliente
 FROM pedidos p 
 JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido 

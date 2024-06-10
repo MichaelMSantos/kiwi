@@ -45,12 +45,11 @@
                         <input id="newInput" type="text" name="newInput" class="h-8" disabled>
                     </div>
                     <label class="label text-white">Email</label>
-                    <input type="email" name="name" class="h-8">
+                    <input type="email" name="email" class="h-8" required>
                     <label class="label pt-5 text-white">Senha</label>
-                    <input type="password" name="password" class="h-8">
+                    <input type="password" name="senha" class="h-8" required>
                     <input type="submit" value="entrar"
                         class="mt-9 h-8 w-56 uppercase rounded-full mx-auto tracking-wider antialiased">
-                    <a href="index.php" class="text-white uppercase text-sm text-center pt-9">voltar</a>
                 </form>
             </div>
         </div>
