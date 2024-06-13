@@ -49,6 +49,7 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/produtos.css">
     <link rel="stylesheet" href="./css/scrollbar.css">
+    <link rel="stylesheet" href="./css/pagamento.css">
 
     <title>Kiwi | Início</title>
 </head>
@@ -115,9 +116,9 @@ if ($result->num_rows > 0) {
 
     .background-kiwi-container {
         width: 100%;
-        background: linear-gradient(45deg, #040504, #040504, #195D19, #195D19);
+        background: linear-gradient(45deg, #040504, #040504, #031E03, #031E03);
         background-size: 300% 300%;
-        animation: color 5s ease-in-out infinite;
+        animation: color 6s ease-in-out infinite;
     }
 
     @keyframes color {
@@ -153,7 +154,7 @@ if ($result->num_rows > 0) {
         background-color: red;
         color: white;
         border-radius: 50%;
-        padding: 0 5px;
+        padding: 0 2px;
         font-size: 0.75rem;
     }
 
@@ -230,7 +231,7 @@ if ($result->num_rows > 0) {
             <div class="mt-3">
                 <strong>Total: R$ <span id="cartTotal">0.00</span></strong>
             </div>
-            <button class="btn btn-primary mt-3 finalizarCompra">Finalizar Compra</button>
+            <button class="btn btn-primary mt-3" onclick="prosseguirCompra()" data-bs-target="#paymentModal">Prosseguir</button>
         </div>
     </div>
 
@@ -464,108 +465,102 @@ if ($result->num_rows > 0) {
     <!-- Fim AJUDA-->
 
       <!-- Modal para exibir a descrição completa -->
-<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="descriptionModalLabel">Descrição Completa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="description-container">
-                    <p id="fullDescription"></p>
+                <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="descriptionModalLabel">Descrição Completa</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="description-container">
+                                    <p id="fullDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<!-- Modal pagamento -->
+                    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="paymentModal">Método de pagamento</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="needs-validation" novalidate>
+                                        <div class="methods mb-3 text-center d-flex justify-content-center">
+                                            <img src="cards/visa.svg" alt="">
+                                            <img src="cards/mastercard.svg" alt="">
+                                            <img src="cards/elo.svg" alt="">
+                                            <img src="cards/hipercard.svg" alt="">
+                                        </div>
+                                        <hr>
+                                        <div class="opcoes">
+                                            <p>Escolha uma opção</p>
+                                            <input type="radio" name="payment" id="debito" value="debito">
+                                            <label for="debito" class="opcao">Débito</label>
+                                            <input type="radio" name="payment" id="credito" value="credito">
+                                            <label for="credito" class="opcao">Crédito</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="cardNumber" class="form-label">Número do cartão</label>
+                                            <input type="text" id="cardNumber" class="form-control" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="expDate" class="form-label">Validade</label>
+                                                <input type="text" id="expDate" class="form-control" placeholder="MM/AA" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cvc" class="form-label">CVC</label>
+                                                <input type="text" id="cvc" class="form-control" placeholder="CVC" maxlength="3" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3" id="parcelas" style="display: none;">
+                                                    <label for="parcelasSelect" class="form-label">Parcelas</label>
+                                                    <select class="form-select" id="parcelasSelect">
+                                                        <option value="" readonly></option>
+                                                        <option value="12">12x</option>
+                                                        <option value="11">11x</option>
+                                                        <option value="10">10x</option>
+                                                        <option value="9">9x</option>
+                                                        <option value="8">8x</option>
+                                                        <option value="7">7x</option>
+                                                        <option value="6">6x</option>
+                                                        <option value="5">5x</option>
+                                                        <option value="4">4x</option>
+                                                        <option value="3">3x</option>
+                                                        <option value="2">2x</option>
+                                                        <option value="1">1x</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="valorDeParcela col-md-6" id="valorDeParcela" style="display: none;">
+                                                <label>Valor parcelado:</label>
+                                                <input type="text" readonly id="valorParcelado">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-primary finalizarCompra" id="submitBtn">Finalizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
     <script src="js/gradient.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script src="js/carrossel.js"></script>
+    <script src="js/carrinho.js"></script>
     <script>
-        
-
-        let cart = [];
-
-        function addToCart(button) {
-    const card = button.closest('.card');
-    const itemName = card.querySelector('.card-title').textContent;
-    const itemPrice = parseFloat(card.querySelector('.card-price').textContent.replace('R$', '').trim());
-    const itemId = button.getAttribute('data-id');
-    const itemImage = card.querySelector('.card-image').src;
-
-    const item = {
-        id: itemId,
-        name: itemName,
-        price: itemPrice,
-        image: itemImage,
-        quantity: 1 
-    };
-
-    // Verifica se o item já está no carrinho
-    const existingItem = cart.find(i => i.id === item.id);
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push(item);
-    }
-
-    updateCart();
-}
-
-function updateItemQuantity(itemId, quantity) {
-    const item = cart.find(item => item.id === itemId);
-    if (item) {
-        item.quantity = parseInt(quantity);
-        if (item.quantity === 0) {
-            removeFromCart(itemId);
-        } else {
-            updateCart();
-        }
-    }
-}
-
-function removeFromCart(itemId) {
-    cart = cart.filter(item => item.id !== itemId);
-    updateCart();
-}
-
-function updateCart() {
-    const cartItemsContainer = document.getElementById('cartItems');
-    const cartTotalElement = document.getElementById('cartTotal');
-    const cartCountElement = document.getElementById('cart-count');
-
-    cartItemsContainer.innerHTML = '';
-
-    let total = 0;
-    let itemCount = 0;
-
-    cart.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'list-group-item d-flex justify-content-between align-items-center';
-        li.innerHTML = `
-            <div>
-                <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;">
-                <span>${item.name}</span>
-            </div>
-            <div>
-                <span>R$ ${item.price.toFixed(2)}</span>
-                <input type="number" class="form-control item-quantity" value="${item.quantity}" min="0" onchange="updateItemQuantity('${item.id}', this.value)">
-            </div>
-        `;
-        cartItemsContainer.appendChild(li);
-        total += item.price * item.quantity;
-        itemCount += item.quantity;
-    });
-
-    cartTotalElement.textContent = total.toFixed(2);
-    cartCountElement.textContent = `(${itemCount})`;
-
-    const finalizarCompraButton = document.querySelector('.finalizarCompra');
-    finalizarCompraButton.addEventListener('click', finalizarCompra);
-}
 
 updateCart();
 
@@ -575,88 +570,108 @@ updateCart();
                         behavior: 'smooth'
                     });
                 }
-        function flipCard(button) {
-            const card = button.closest('.card');
-            card.classList.toggle('is-flipped');
-        }
-        window.onload = function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const viewMoreButtons = document.querySelectorAll(".view-more");
 
-var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween: 10,
-    loop: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-        },
-        768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        1200: {
-            slidesPerView: 4,
-            spaceBetween: 10,
-        }
-    }
-});
-
-function slider() {
-    swiper.slideNext(); 
-}
-
-setInterval(slider, 5000);
-
-}
-document.addEventListener("DOMContentLoaded", function () {
-    const viewMoreButtons = document.querySelectorAll(".view-more");
-
-    viewMoreButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const description = this.getAttribute("data-description");
-            document.getElementById("fullDescription").textContent = description;
+            viewMoreButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const description = this.getAttribute("data-description");
+                    document.getElementById("fullDescription").textContent = description;
+                });
+            });
         });
-    });
+
+        document.querySelector('.btn[data-bs-target="#paymentModal"]').addEventListener('click', function () {
+            if (cart.length > 0) {
+                new bootstrap.Offcanvas(document.getElementById('cartSidebar')).hide();
+                new bootstrap.Modal(document.getElementById('paymentModal')).show();
+            } else {
+                alert('Adicione itens ao carrinho antes de prosseguir.');
+            }
+        });
+
+        document.getElementById('cardNumber').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(.{4})/g, '$1 ').trim();
+    e.target.value = value;
 });
 
+document.getElementById('expDate').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+    }
+    e.target.value = value;
+});
+
+document.getElementById('credito').addEventListener('change', function (e) {
+    document.getElementById('parcelas').style.display = e.target.checked ? 'block' : 'none';
+    document.getElementById('valorDeParcela').style.display = e.target.checked ? 'block' : 'none';
+});
+
+document.getElementById('debito').addEventListener('change', function (e) {
+    document.getElementById('parcelas').style.display = e.target.checked ? 'none' : 'block';
+    document.getElementById('valorDeParcela').style.display = e.target.checked ? 'none' : 'block';
+});
 
 function finalizarCompra() {
-    if (cart.length === 0) {
-        alert('Adicione itens ao carrinho antes de finalizar a compra.');
+    const metodoDePagamento = document.querySelector('input[name="payment"]:checked');
+    if (!metodoDePagamento) {
+        alert('Por favor, selecione um método de pagamento.');
         return;
     }
 
-    // Envia os itens do carrinho para o backend
-    fetch('processar_pedido.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cart)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Pedido finalizado com sucesso!');
-            cart = [];
-            updateCart();
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.removeEventListener('click', handleSubmit);
+
+    submitBtn.addEventListener('click', handleSubmit);
+}
+
+function finalizarCompra(){
+    const metodoDePagamento = document.querySelector('input[name="payment"]:checked');
+    if (!metodoDePagamento) {
+        alert('Por favor, selecione um método de pagamento.');
+        return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.removeEventListener('click', finalizarCompra);
+
+    submitBtn.addEventListener('click', function () {
+        var form = document.querySelector('.needs-validation');
+        if (form.checkValidity()) {
+            form.submit();
+            fetch('processar_pedido.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cart)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    alert('Seu pagamento foi registrado em nosso sistema, em breve entraremos em contato!');
+                    window.location.href='cliente.php';
+                    cart = [];
+                    updateCart();
+                } else {
+                    alert('Ocorreu um erro ao finalizar o pedido.');
+                }
+            })
+            // .catch(error => {
+            //         console.error('Erro:', error);
+            //         alert('Ocorreu um erro ao finalizar o pedido.');
+            //     });
+
         } else {
-            alert('Ocorreu um erro ao finalizar o pedido.');
+            form.classList.add('was-validated');
         }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Ocorreu um erro ao finalizar o pedido.');
     });
 }
+
+
 
 
     </script>

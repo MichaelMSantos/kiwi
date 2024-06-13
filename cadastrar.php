@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $server = "127.0.0.1";
@@ -16,27 +12,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Falha na conexão com o banco de dados: " . $conn->connect_error);
     }   
 
-    if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['password'])) {
+    if (!empty($_POST['nome']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-
+    
         $stmt = $conn->prepare("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $nome, $email, $password);
-
+    
         if ($stmt->execute() === TRUE) {
             echo "<script>alert('Conta criada com sucesso')</script>";
+            $stmt->close();
+            $conn->close();
+            echo "<script>window.location.href='login.php'</script>";
+            exit; 
         } else {
             echo "Erro: " . $stmt->error;
         }
-
+    
         $stmt->close();
         $conn->close();
     } else {
-        echo "<script>alert('Campos obrigatórios não preenchidos.')</script>";
+        echo "<script>alert('Por favor, preencha todos os campos obrigatórios.')</script>";
+        echo "<script>window.location.href='login.php'</script>";
+        exit; 
     }
+    
 } else {
     echo "<script>alert('Método de requisição inválido.')</script>";
+    echo "<script>window.location.href='login.php'</script>";
+    exit; 
 }
+
 ?>

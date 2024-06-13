@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Admin Dashboard</title>
+    <title>Gerenciamento de pedidos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/dashboard.css">
@@ -79,9 +79,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
     .input-group {
         width: 26rem;
     }
+    .loader-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loader {
+    width: 50px;
+    padding: 8px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #fff;
+    --_m: 
+        conic-gradient(#0000 10%,#000),
+        linear-gradient(#000 0 0) content-box;
+    -webkit-mask: var(--_m);
+            mask: var(--_m);
+    -webkit-mask-composite: source-out;
+            mask-composite: subtract;
+    animation: l3 2s infinite linear;
+    }
+    @keyframes l3 {to{transform: rotate(1turn)}}
+    .slide-up {
+      opacity: 0;
+      transform: translateY(100px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .slide-up.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Apenas para facilitar a visualização durante o scroll */
+    body {
+      height: 2000px;
+    }
+    #slideUpElement {
+      margin-top: 80px; /* Ajuste conforme necessário para testar o scroll */
+    }
 </style>
 
 <body>
+        <div id="loader" class="loader-container">
+            <div class="loader"></div> 
+        </div>
     <div class="wrapper">
         <aside id="sidebar" class="js-sidebar">
             <div class="h-100">
@@ -124,30 +172,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
                     <div class="mb-3 mt-3">
                         <h4>Gerenciamento de Pedidos</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 d-flex">
-                            <div class="card flex-fill border-0 illustration">
-                                <div class="card-body p-0 d-flex flex-fill">
-                                    <div class="row g-0 w-100">
-                                        <div class="col-6">
-                                            <div class="p-3 m-1">
-                                                <h4>Bem-vindo(a) de volta!, Admin</h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 align-self-end text-end">
-                                            <img src="image/customer-support.jpg" class="img-fluid illustration-img" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
                     <!-- Tabela -->
-                    <div class="card border-0">
+                    <div class="card border-0 slide-up" id="slideUpElement">
                         <div class="card-header d-flex justify-content-between">
-                            <h4 class="card-title">
-                                Pedidos
-                            </h4>
+                            <h3 class="card-title">
+                                Pedidos de clientes
+                            </h3>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Pesquisar cliente" id="searchInput">
                                 <button class="btn btn-primary" type="button" id="searchButton">Pesquisar</button>
@@ -251,8 +282,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
             </div>
         </div>
     </div>
-
+    <script src="js/pagination.js"></script>
     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+            }, 300);
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 }); 
+
+      const slideUpElement = document.getElementById("slideUpElement");
+      observer.observe(slideUpElement);
+    });
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+            }, 300);
+        });
          document.getElementById('searchInput').addEventListener('input', function () {
         var input, filter, table, tr, td, i, txtValue;
         input = this;
@@ -289,35 +343,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
             modalStatus.value = status;
         });
 
-        function goToPage(pageNumber) {
-            var rows = document.querySelectorAll('#productTable tbody tr');
-            var rowsPerPage = 3;
-            var totalPages = Math.ceil(rows.length / rowsPerPage);
-
-            rows.forEach(function(row) {
-                row.style.display = 'none';
-            });
-
-            var start = (pageNumber - 1) * rowsPerPage;
-            var end = start + rowsPerPage;
-            for (var i = start; i < end; i++) {
-                if (rows[i]) {
-                    rows[i].style.display = '';
-                }
-            }
-            var pagination = document.getElementById('pagination');
-            pagination.innerHTML = '';
-
-            for (var i = 1; i <= totalPages; i++) {
-                var li = document.createElement('li');
-                li.classList.add('page-item');
-                if (i === pageNumber) {
-                    li.classList.add('active');
-                }
-                li.innerHTML = '<a class="page-link" href="#" onclick="goToPage(' + i + ')">' + i + '</a>';
-                pagination.appendChild(li);
-            }
-        }
         goToPage(1);
         
     </script>
